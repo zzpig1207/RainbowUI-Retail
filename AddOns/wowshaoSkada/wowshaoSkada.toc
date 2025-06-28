@@ -1,0 +1,13 @@
+�## Interface: 110107
+## X-Min-Interface: 110107
+## Title:|cffffe00a<|r|cffff7d0a��������r|cffffe00a>|r ������
+## Title-zhCN:|cffffe00a<|r|cff556a39GJS|r|cffffe00a>|r �����������1.01
+## Title-zhTW:|cffffe00a<|r|cff556a39GJS|r|cffffe00a>|r �����������1.01
+## Notes-zhCN: |cffffff00��������r
+## Notes-zhTW: |cffffff00��������r
+## Author: FUC
+## DefaultState: Enabled
+## SavedVariablesPerCharacter: wowshaoskadaConfig
+wowshaolist.lua
+wowshaoSkada.lua
+dszCheckMagic.lua
