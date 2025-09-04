@@ -1,8 +1,10 @@
 # DBM - Dungeons, Delves, & Events
 
-## [r199](https://github.com/DeadlyBossMods/DBM-Dungeons/tree/r199) (2025-05-19)
-[Full Changelog](https://github.com/DeadlyBossMods/DBM-Dungeons/compare/r198...r199) [Previous Releases](https://github.com/DeadlyBossMods/DBM-Dungeons/releases)
+## [r208](https://github.com/DeadlyBossMods/DBM-Dungeons/tree/r208) (2025-08-12)
+[Full Changelog](https://github.com/DeadlyBossMods/DBM-Dungeons/compare/r207...r208) [Previous Releases](https://github.com/DeadlyBossMods/DBM-Dungeons/releases)
 
-- Fix and close https://github.com/DeadlyBossMods/DBM-Dungeons/issues/503  
-- Fix and close https://github.com/DeadlyBossMods/DBM-Dungeons/issues/502  
-- Fix and close https://github.com/DeadlyBossMods/DBM-Dungeons/issues/501  
+- Another round of Tazavesh streets timers and alerts  
+- squeeze in some new delve alerts for high priority dodges and interrupts  
+- Update localization.tw.lua (#521)  
+- Update zhCN (#520)  
+- Add 6 more spell timers to tazavesh  

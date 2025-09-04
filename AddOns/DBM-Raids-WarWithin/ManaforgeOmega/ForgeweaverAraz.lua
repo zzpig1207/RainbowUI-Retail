@@ -1,8 +1,7 @@
-if DBM:GetTOC() < 110200 then return end
 local mod	= DBM:NewMod(2687, "DBM-Raids-WarWithin", 1, 1302)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20250709040145")
+mod:SetRevision("20250812013529")
 mod:SetCreatureID(247989)
 mod:SetEncounterID(3132)
 mod:SetHotfixNoticeRev(20250708000000)
@@ -13,15 +12,14 @@ mod.respawnTime = 29
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 1228502 1228216 1228161 1227631 1231720 1234328 1232221 1230529 1243887",
+	"SPELL_CAST_START 1228502 1228216 1228161 1227631 1231720 1234328 1232221 1230529 1243887 1248133",
 	"SPELL_CAST_SUCCESS 1230231",
 	"SPELL_AURA_APPLIED 1228506 1228454 1228188 1233979 1233415 1243873",
 	"SPELL_AURA_APPLIED_DOSE 1228506",
-	"SPELL_AURA_REMOVED 1228454 1233979 1233415 1243873",
+	"SPELL_AURA_REMOVED 1228454 1233979 1233415 1243873"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED"
-	"UNIT_DIED"
---	"CHAT_MSG_RAID_BOSS_WHISPER",
+--	"UNIT_DIED"
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -41,25 +39,27 @@ mod:RegisterEventsInCombat(
 --]]
 --mod:AddTimerLine(DBM:EJ_GetSectionInfo(28754))
 local warnOverwhelmingPower							= mod:NewStackAnnounce(1228502, 2, nil, "Tank|Healer")
+local warnVoidTear									= mod:NewCountAnnounce(1248133, 3)
 
 local specWarnOverwhelmingPower						= mod:NewSpecialWarningStack(1228502, nil, 10, nil, nil, 1, 6)
 local specWarnOverwhelmingPowerTaunt				= mod:NewSpecialWarningTaunt(1228502, nil, nil, nil, 1, 2)
 local specWarnArcaneObliteration					= mod:NewSpecialWarningCount(1228216, nil, nil, DBM_COMMON_L.GROUPSOAK, 2, 2)
 local yellArcaneObliteration						= mod:NewShortYell(1228216, DBM_COMMON_L.GROUPSOAK, nil, nil, "YELL")
 local yellArcaneObliterationFades					= mod:NewShortFadesYell(1228216, nil, nil, nil, "YELL")
-local specWarnSilencingTempest						= mod:NewSpecialWarningDodgeCount(1228161, nil, nil, nil, 2, 2)
-local yellSilencingTempest							= mod:NewShortYell(1228161)
+local specWarnSilencingTempest						= mod:NewSpecialWarningDodgeCount(1228188, nil, nil, nil, 2, 2)
+local yellSilencingTempest							= mod:NewShortYell(1228188)
 local specWarnArcaneExpulsion						= mod:NewSpecialWarningCount(1227631, nil, nil, nil, 2, 2)
 local specWarnInvokeCollector						= mod:NewSpecialWarningSwitchCount(1231720, "-Tank", nil, nil, 1, 2)--Tank should stay away
-local specWarnAstralHarvest							= mod:NewSpecialWarningYou(1233979, nil, nil, nil, 1, 2)
-local yellAstralHarvestFades						= mod:NewShortFadesYell(1233979)
+local specWarnAstralHarvest							= mod:NewSpecialWarningYou(1228214, nil, nil, nil, 1, 2)
+local yellAstralHarvestFades						= mod:NewShortFadesYell(1228214)
 --local specWarnGTFO								= mod:NewSpecialWarningGTFO(459785, nil, nil, nil, 1, 8)
 
 local timerOverwhelmingPowerCD						= mod:NewCDCountTimer(44, 1228502, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerArcaneObliterationCD						= mod:NewCDCountTimer(45, 1228216, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerSilencingTempestCD						= mod:NewCDCountTimer(97.3, 1228161, nil, nil, nil, 3)
+local timerSilencingTempestCD						= mod:NewCDCountTimer(97.3, 1228188, nil, nil, nil, 3)
 local timerArcaneExpulsionCD						= mod:NewCDCountTimer(97.3, 1227631, nil, nil, nil, 2)
-local timerInvokeCollectorCD						= mod:NewAITimer(97.3, 1231720, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerInvokeCollectorCD						= mod:NewCDCountTimer(97.3, 1231720, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerVoidTearCD								= mod:NewCDCountTimer(97.3, 1248171, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
 local berserkTimer									= mod:NewBerserkTimer(600)
 
 mod:AddNamePlateOption("NPAuraOnMarkofPower", 1238502)
@@ -74,24 +74,67 @@ local specWarnPhotonBlast							= mod:NewSpecialWarningDodge(1234328, nil, nil, 
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(32384))
 local warnPhase2									= mod:NewPhaseAnnounce(1248009, 2, nil, nil, nil, nil, nil, 2)
 
-local specWarnHungeringGloom						= mod:NewSpecialWarningYou(1243873, nil, nil, nil, 1, 2)
-local yellHungeringGloomFades						= mod:NewShortFadesYell(1243873)
+local specWarnVoidHarvest							= mod:NewSpecialWarningYou(1243901, nil, nil, nil, 1, 2)
+local yellVoidHarvestFades							= mod:NewShortFadesYell(1243901)
 local specWarnDeaththroes							= mod:NewSpecialWarningCount(1232221, nil, nil, nil, 2, 2, 4)
 
-local timerHungeringGloomCD							= mod:NewAITimer(97.3, 1243873, nil, nil, nil, 3)
-local timerDeaththroesCD							= mod:NewAITimer(97.3, 1232221, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerVoidHarvestCD							= mod:NewCDCountTimer(8, 1243901, nil, nil, nil, 3)
+local timerDeaththroesCD							= mod:NewCDCountTimer(97.3, 1232221, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
 
 mod.vb.overwhelmingPowerCount = 0--Returns in stage 2
 mod.vb.obliterationCount = 0
 mod.vb.silencingTempestCount = 0--Returns in stage 2
 mod.vb.arcaneExpulsionCount = 0
 mod.vb.invokeCollectorCount = 0
+mod.vb.voidTearCount = 0
 --Stage 2
-mod.vb.hungeringGloomCount = 0
+mod.vb.voidHarvestCount = 0
 mod.vb.deaththroesCount = 0
 
 local savedDifficulty = "normal"
 local allTimers = {
+	["mythic"] = {
+		[1] = {
+			--Overwhelming Power
+			[1228502] = {4, 22, 22, 22, 22, 22},
+			--Arcane Obliteration
+			[1228216] = {30.9, 45},
+			--Silencing Tempest
+			[1228161] = {63, 44, 23},--23 is diff from heroic
+			--Arcane Expulsion
+			[1227631] = {155},--5 second longer than heroic
+			--Invoke Collector
+			[1231720] = {9, 44, 44},
+			--Void Tear
+			[1248133] = {21.5, 46, 14.4, 28.5, 14.5, 15},
+		},
+		[2] = {
+			--Overwhelming Power
+			[1228502] = {18.6, 22, 22, 22, 22, 22},
+			--Arcane Obliteration
+			[1228216] = {68.7},
+			--Silencing Tempest
+			[1228161] = {57.6, 44, 21},
+			--Arcane Expulsion
+			[1227631] = {139.9},--10 seconds shorter than heroic
+			--Invoke Collector
+			[1231720] = {23.6, 22, 44},
+			--Void Tear
+			[1248133] = {36.2, 21.5, 14.4, 29, 14.4, 14.4},
+		},
+		[3] = {
+			--Void Harvest
+			[1243887] = {31.3, 8, 8, 28, 8, 8, 28},
+			--Deaththroes (mythic only)
+			[1232221] = {62.3, 44},
+			--Overwhelming Power
+			[1228502] = {27.3, 22, 22, 22, 22},
+			--Silencing Tempest
+			[1228161] = {35.3, 44},
+			--Void Tear
+			[1248133] = {},--Non seen
+		},
+	},
 	["heroic"] = {
 		[1] = {
 			--Overwhelming Power
@@ -118,7 +161,7 @@ local allTimers = {
 			[1231720] = {23.6, 22, 44},
 		},
 		[3] = {
-			--Hungering Gloom
+			--Void Harvest
 			[1243887] = {39, 8, 80, 8, 46, 8},
 			--Deaththroes (mythic only)
 			[1232221] = {},
@@ -154,7 +197,7 @@ local allTimers = {
 			[1231720] = {23.7, 22},
 		},
 		[3] = {
-			--Hungering Gloom
+			--Void Harvest
 			[1243887] = {39.2, 96, 46},
 			--Overwhelming Power
 			[1228502] = {31.2, 44, 44, 44, 10, 44},--Final 44 assumed by heroic
@@ -190,10 +233,12 @@ function mod:OnCombatStart(delay)
 	self.vb.silencingTempestCount = 0
 	self.vb.arcaneExpulsionCount = 0
 	self.vb.invokeCollectorCount = 0
-	self.vb.hungeringGloomCount = 0
+	self.vb.voidHarvestCount = 0
 	self.vb.deaththroesCount = 0
+	self.vb.voidTearCount = 0
 	if self:IsMythic() then
-		savedDifficulty = "heroic"--Temp
+		savedDifficulty = "mythic"
+		timerVoidTearCD:Start(allTimers[savedDifficulty][1][1248133][1]-delay, 1)
 	elseif self:IsHeroic() then
 		savedDifficulty = "heroic"
 	else--Combine LFR and Normal
@@ -218,7 +263,7 @@ end
 
 function mod:OnTimerRecovery()
 	if self:IsMythic() then
-		savedDifficulty = "heroic"
+		savedDifficulty = "mythic"
 	elseif self:IsHeroic() then
 		savedDifficulty = "heroic"
 	else--Combine LFR and Normal
@@ -273,10 +318,23 @@ function mod:SPELL_CAST_START(args)
 		self.vb.deaththroesCount = self.vb.deaththroesCount + 1
 		specWarnDeaththroes:Show(self.vb.deaththroesCount)
 		specWarnDeaththroes:Play("specialsoon")
-		timerDeaththroesCD:Start()--TEMP til mythic table created
+		local timer = self:GetFromTimersTable(allTimers, savedDifficulty, self.vb.phase, spellId, self.vb.deaththroesCount+1)
+		if timer then
+			timerDeaththroesCD:Start(timer, self.vb.deaththroesCount+1)
+		end
 	elseif spellId == 1243887 then
-		self.vb.hungeringGloomCount = self.vb.hungeringGloomCount + 1
-		timerHungeringGloomCD:Start(nil, self.vb.hungeringGloomCount+1)
+		self.vb.voidHarvestCount = self.vb.voidHarvestCount + 1
+		local timer = self:GetFromTimersTable(allTimers, savedDifficulty, self.vb.phase, spellId, self.vb.voidHarvestCount+1)
+		if timer then
+			timerVoidHarvestCD:Start(timer, self.vb.voidHarvestCount+1)
+		end
+	elseif spellId == 1248133 then
+		self.vb.voidTearCount = self.vb.voidTearCount + 1
+		warnVoidTear:Show(self.vb.voidTearCount)
+		local timer = self:GetFromTimersTable(allTimers, savedDifficulty, self.vb.phase, spellId, self.vb.voidTearCount+1)
+		if timer then
+			timerVoidTearCD:Start(timer, self.vb.voidTearCount+1)
+		end
 	elseif spellId == 1230529 then--Mana Sacrifice
 		self:SetStage(0.5)--Increases to stage 2 and stage 3
 		--Reset Counts
@@ -284,7 +342,8 @@ function mod:SPELL_CAST_START(args)
 		self.vb.obliterationCount = 0
 		self.vb.silencingTempestCount = 0
 		self.vb.invokeCollectorCount = 0
-		self.vb.hungeringGloomCount = 0
+		self.vb.voidTearCount = 0
+		self.vb.voidHarvestCount = 0
 		self.vb.deaththroesCount = 0
 		--Start all timers
 		if self:GetStage(2) then
@@ -293,14 +352,17 @@ function mod:SPELL_CAST_START(args)
 			timerSilencingTempestCD:Start(allTimers[savedDifficulty][2][1228161][1], 1)
 			timerArcaneExpulsionCD:Start(allTimers[savedDifficulty][2][1227631][1], 2)--Only count not resetting since it's timer for actual phase changes
 			timerInvokeCollectorCD:Start(allTimers[savedDifficulty][2][1231720][1], 1)
+			if self:IsMythic() then
+				timerVoidTearCD:Start(allTimers[savedDifficulty][2][1248133][1], 1)
+			end
 		else--Stage 3
 			warnPhase2:Show()
 			warnPhase2:Play("ptwo")
 			timerOverwhelmingPowerCD:Start(allTimers[savedDifficulty][3][1228502][1], 1)
 			timerSilencingTempestCD:Start(allTimers[savedDifficulty][3][1228161][1], 1)
-			timerHungeringGloomCD:Start(allTimers[savedDifficulty][3][1243887][1], 1)
+			timerVoidHarvestCD:Start(allTimers[savedDifficulty][3][1243887][1], 1)
 			if self:IsMythic() then
-				timerDeaththroesCD:Start(2)
+				timerDeaththroesCD:Start(allTimers[savedDifficulty][3][1232221][1], 1)
 			end
 		end
 	end
@@ -316,6 +378,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerSilencingTempestCD:Stop()
 		timerArcaneExpulsionCD:Stop()
 		timerInvokeCollectorCD:Stop()
+		timerVoidTearCD:Stop()
 	end
 end
 
@@ -350,9 +413,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif spellId == 1243873 then
 		if args:IsPlayer() then
-			specWarnHungeringGloom:Show()
-			specWarnHungeringGloom:Play("runout")
-			yellHungeringGloomFades:Countdown(spellId)
+			specWarnVoidHarvest:Show()
+			specWarnVoidHarvest:Play("runout")
+			yellVoidHarvestFades:Countdown(spellId)
 		end
 --	elseif spellId == 1240437 then--Volatile Surge
 		--TODO, player stuffs
@@ -374,13 +437,14 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	elseif spellId == 1243873 then
 		if args:IsPlayer() then
-			yellHungeringGloomFades:Cancel()
+			yellVoidHarvestFades:Cancel()
 		end
 	elseif spellId == 1233415 then
 		warnManaSplinterFaded:Show()
 	end
 end
 
+--[[
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 241923 then--Arcane Echo
@@ -389,6 +453,7 @@ function mod:UNIT_DIED(args)
 
 	end
 end
+--]]
 
 --[[
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
@@ -408,13 +473,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 		warnPhase2:Show()
 		warnPhase2:Play("ptwo")
 		self.vb.overwhelmingPowerCount = 0
-		self.vb.hungeringGloomCount = 0
+		self.vb.voidHarvestCount = 0
 		self.vb.silencingTempestCount = 0
 		self.vb.deaththroesCount = 0
 		--Start p2 timers
 		timerOverwhelmingPowerCD:Start(2)
 		timerSilencingTempestCD:Start(2)
-		timerHungeringGloomCD:Start(2)
+		timerVoidHarvestCD:Start(2)
 		if self:IsMythic() then
 			timerDeaththroesCD:Start(2)
 		end

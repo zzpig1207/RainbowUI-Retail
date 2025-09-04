@@ -17,7 +17,19 @@ L.OTabWorld		= "Jefes del mundo"--Since there are so many world mods, enough to 
 L.OTabScenarios	= "Escenarios"--Future use, will be used for scenarios and delves, likely after there are more than 2 mods (so probably 12.x or later)
 L.OTabPlugins	= "Otros" --Scenarios, PVP, Delves (11.x), Solo/Challenge content (torghast, mage tower, etc)
 L.OTabOptions	= "Opciones"
+--L.OTabTools							= "Tools"--Such as break timer button, durability checks, latency checks, keystone checks (in future)
 L.OTabAbout		= "Acerca de"
+
+--Main Tab, Tools checks
+--L.Tools_LatencyCheck				= "Latency Check"
+--L.Tools_DurabilityCheck				= "Durability Check"
+--L.Tools_KeystoneCheck				= "Keystone Check"
+
+--L.Tools_BreakTimer					= "Start Break Timer"
+--L.Tools_PizzaTimer					= "Start Generic Timer"
+
+--L.Tools_Duration					= "Duration"
+--L.Tools_Message						= "Timer Message"
 
 L.TabCategory_CURRENT_SEASON		= "Temporada actual"
 
@@ -296,10 +308,10 @@ L.BrowseOtherCTs			= "|cFF73C2FBhttps://www.curseforge.com/wow/addons/search?sea
 -- Panel: Event Sounds
 L.Panel_EventSounds			= "Sonidos de eventos"
 L.Area_SoundSelection		= "Selección de sonidos"
-L.EventVictorySound			= "Sonido de victoria de encuentro"
-L.EventWipeSound			= "Sonido de derrota de encuentro"
-L.EventEngagePT				= "Sonido de temporizador de inicio de encuentro"
-L.EventEngageSound			= "Sonido de inicio de encuentro"
+L.EventVictorySound			= "Sonido de victoria"
+L.EventWipeSound			= "Sonido de derrota"
+L.EventEngagePT				= "Sonido de temporizador de inicio"
+L.EventEngageSound			= "Sonido de inicio"
 L.EventDungeonMusic			= "Música de fondo de mazmorras y bandas"
 L.EventEngageMusic			= "Música de fondo de encuentro"
 L.Area_EventSoundsExtras	= "Opciones de sonidos de eventos"
@@ -387,8 +399,8 @@ L.AreaTitle_BarSetupVariance 	= "Opciones de barras de variación"
 L.EnableHugeBar 				= "Activar barras grandes (o 'Barra 2')"
 L.EnableVarianceBar 			= "Activar barras de variación"
 L.VarianceColor					= "Color de variación"
-L.VarianceTransparency			= "Transparencia de las barras: %0.1f"
-L.VarianceTimerTextBehavior 	= "Comportamiento del texto del temporizador de variación"
+L.VarianceTransparency			= "Transparencia: %0.1f"
+L.VarianceTimerTextBehavior 	= "Comportamiento del texto"
 L.ZeroatWindowEnds 				= "El texto llega a cero al final de la ventana de reutilización"
 L.ZeroatWindowStartPause 		= "El texto llega a cero al inicio de la ventana de reutilización y se pausa"
 L.ZeroatWindowStartRestart 		= "El texto llega a cero al inicio de la ventana de reutilización y luego se reinicia"
@@ -438,7 +450,7 @@ L.SpamBlockNoPrivateAuraSound		= "No registrar sonidos de auras privados"
 
 L.Area_SpamFilter_Timers			= "Opciones de temporizadores"
 L.SpamBlockNoShowBossTimers			= "No mostrar temporizadores para jefes de mazmorras/bandas"
-L.SpamBlockNoShowTrashTimers		= "No mostrar temporizadores para bichos (Nota: esto también desactiva los TdR con placa de nombre)"
+L.SpamBlockNoShowTrashTimers		= "No mostrar temporizadores para bichos (Nota: esto también desactiva las reutilizaciones con placa de nombre)"
 L.SpamBlockNoShowEventTimers		= "No mostrar temporizadores de eventos"
 L.SpamBlockNoShowUTimers			= "No mostrar temporizadores enviados por el usuario"
 L.SpamBlockNoCountdowns				= "No reproducir sonidos de cuenta atrás"

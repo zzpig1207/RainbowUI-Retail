@@ -21,6 +21,17 @@ L.OTabTools					= "Инструменты"--Например, кнопка та�
 L.OTabAbout					= "About"--I need to check it, then I’ll translate it
 
 --Main Tab, Tools checks
+--L.Tools_LatencyCheck				= "Latency Check"
+--L.Tools_DurabilityCheck				= "Durability Check"
+--L.Tools_KeystoneCheck				= "Keystone Check"
+
+--L.Tools_BreakTimer					= "Start Break Timer"
+--L.Tools_PizzaTimer					= "Start Generic Timer"
+
+--L.Tools_Duration					= "Duration"
+--L.Tools_Message						= "Timer Message"
+
+--Main Tab, Tools checks
 L.Tools_LatencyCheck				= "Проверка задержки"
 L.Tools_DurabilityCheck				= "Проверка прочности"
 L.Tools_KeystoneCheck				= "Проверка ключа М+"
@@ -225,11 +236,11 @@ L.MonochromeThickOutline	= "Монохромный толстый контур"
 L.RaidWarnSound				= "Воспроизводить звук предупреждения для рейда"
 
 -- Panel: Spec Warn Frame
-L.Panel_SpecWarnFrame		= "Спецпредупреждения для рейда"
+L.Panel_SpecWarnFrame		= "Спецпредупреждения"
 L.Area_SpecWarn				= "Настройка специальных предупреждений"
 L.SpecWarn_ClassColor		= "Использовать цвета классов для спецпредупреждений"
 L.ShowSWarningsInChat 		= "Показывать спецпредупреждения в окне чата"
-L.SWarnNameInNote			= "Использовать SW5 настройки, если заметка содержит Ваше имя"
+L.SWarnNameInNote			= "Использовать параметры 5-го типа, если заметка содержит Ваше имя"
 L.SpecialWarningIcon		= "Показывать иконки на специальных предупреждениях"
 L.ShortTextSpellname		= "Использовать более короткий текст названия (когда доступно)"
 L.SpecWarn_FlashFrameRepeat	= "Мигание %d раз"
@@ -283,7 +294,7 @@ L.Area_VoiceSelection		= "Выбор голоса"
 L.CountdownVoice			= "Основной голос для звуков отсчета"
 L.CountdownVoice2			= "Вторичный голос для звуков отсчета"
 L.CountdownVoice3			= "Третичный голос для звуков отсчета"
-L.PullVoice					= "Установить голос для таймеров пулла"
+L.PullVoice					= "Установить голос для таймеров атаки"
 L.VoicePackChoice			= "Голосовой пакет для предупреждений"
 L.MissingVoicePack			= "Отсутствующий голосовой пакет (%s)"
 L.Area_CountdownOptions		= "Настройки обратного отсчета"
@@ -304,7 +315,7 @@ L.Panel_EventSounds			= "Звуковые события (победа, вайп
 L.Area_SoundSelection		= "Выбор звуков для победы, вайпов, пулла и фоновой музыки"
 L.EventVictorySound			= "Установить звук при победе в бою"
 L.EventWipeSound			= "Установить звук при поражении в бою"
-L.EventEngagePT				= "Установить звук для запуска таймера пулла"
+L.EventEngagePT				= "Установить звук для запуска таймера атаки"
 L.EventEngageSound			= "Установить звук при вступлении в бой"
 L.EventDungeonMusic			= "Установить музыку в подземельях/рейдах"
 L.EventEngageMusic			= "Установить музыку во время боя"
@@ -337,8 +348,8 @@ L.BarSaturation				= "Насыщенность полос для маленьк�
 --Types
 L.BarStartColorAdd			= "Начальный цвет 1 (Моб)"
 L.BarEndColorAdd			= "Конечный цвет 1 (Моб)"
-L.BarStartColorAOE			= "Начальный цвет 2 (Урон по области)"
-L.BarEndColorAOE			= "Конечный цвет 2 (Урон по области)"
+L.BarStartColorAOE			= "Начальный цвет 2 (АоЕ)"
+L.BarEndColorAOE			= "Конечный цвет 2 (АоЕ)"
 L.BarStartColorDebuff		= "Начальный цвет 3 (Цель)"
 L.BarEndColorDebuff			= "Конечный цвет 3 (Цель)"
 L.BarStartColorInterrupt	= "Начальный цвет 4 (Прерывание)"
@@ -365,10 +376,12 @@ L.CBTRole							= "Специфическое заклинание роли"
 L.CBTPhase							= "Смена фазы"
 L.CBTImportant						= "Важное заклинание пользователя"
 --Dropdown Options
+--Special Announce Dropdowns
 L.SAOne								= "Основной звук 1 (персональный)"
 L.SATwo								= "Основной звук 2 (для всех)"
 L.SAThree							= "Основной звук 3 (высокоприоритетное действие)"
 L.SAFour							= "Основной звук 4 (высокий приоритет -> 'убегать')"
+--Timer Dropdowns
 L.ColorDropGeneric					= "Общий (по умолчанию: Нетипизировано)"
 L.ColorDrop1						= "Цвет 1 (по умолчанию: Моб)"
 L.ColorDrop2						= "Цвет 2 (по умолчанию: АоЕ)"
@@ -378,6 +391,7 @@ L.ColorDrop5						= "Цвет 5 (по умолчанию: Роль)"
 L.ColorDrop6						= "Цвет 6 (по умолчанию: Фаза)"
 L.CDDImportant1						= "Важный 1 (НЕ по умолчанию)"
 L.CDDImportant2						= "Важный 2 (НЕ по умолчанию)"
+--Countdown Dropdowns
 L.CVoiceOne							= "Основной голосовой отсчет 1"
 L.CVoiceTwo							= "Основной голосовой отсчет 2"
 L.CVoiceThree						= "Основной голосовой отсчет 3"
@@ -435,7 +449,7 @@ L.Area_BlizzFiltersSetup	= "Руководство по фильтрам Blizzar
 -- Panel: Toggle DBM Features
 L.Panel_SpamFilter			= "Отключение функций DBM"
 
-L.Area_SpamFilter_SpecFeatures		= "Анонс особенных функций"
+L.Area_SpamFilter_SpecFeatures		= "Функции объявлений"
 L.SpamBlockNoShowAnnounce	= "Не показывать текст и не воспроизводить звук для ЛЮБЫХ общих (не акцентированных) объявлений"
 L.SpamBlockNoSpecWarnText	= "Не показывать текст спецпредупреждений"
 L.SpamBlockNoSpecWarnFlash			= "Не показывать мигание экрана при спецпредупреждении"
@@ -470,12 +484,12 @@ L.Area_Restore				= "Параметры восстановления DBM (вос
 L.SpamBlockNoIconRestore	= "Не сохранять состояние меток и восстанавливать их после боя"
 L.SpamBlockNoRangeRestore	= "Не восстанавливать окно проверки дистанции в предыдущее состояние при скрытии модулями"
 
-L.Area_PullTimer			= "Параметры фильтра таймеров пулла/перерыва/пользов."
-L.DontShowPTNoID			= "Блокировать таймер пулла, отправленный из другой зоны"
-L.DontShowPT				= "Не отображать индикатор таймера пулла/перерыва"
-L.DontShowPTText			= "Не отображать текст объявления для таймера пулла/перерыва"
-L.DontPlayPTCountdown		= "Вообще не воспроизводить звук обратного отсчета пулла/перерыва/пользов."
-L.PT_Threshold				= "Не воспроизводить звук отсчета таймера пулла/перерыва/пользов. более: %d"
+L.Area_PullTimer			= "Параметры фильтра таймеров атаки/перерыва/пользов."
+L.DontShowPTNoID			= "Блокировать таймер атаки, отправленный из другой зоны"
+L.DontShowPT				= "Не отображать индикатор таймера атаки/перерыва"
+L.DontShowPTText			= "Не отображать текст объявления для таймера атаки/перерыва"
+L.DontPlayPTCountdown		= "Вообще не воспроизводить звук обратного отсчета атаки/перерыва/пользов."
+L.PT_Threshold				= "Не воспроизводить звук отсчета таймера атаки/перерыва/пользов. более: %d"
 
 -- Panel: Reduce Information
 L.Panel_ReducedInformation	= "Сокращение информации"
